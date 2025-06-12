@@ -4,19 +4,29 @@ import strata2D.*;
 
 public class PrismaTrapesium extends Trapesium {
     private Double tinggiPrisma;
+    protected Double volume, luasPermukaan;
+    private String nama;
 
     public PrismaTrapesium(Double a, Double b, Double tinggi, Double sisi1, Double sisi2, Double tinggiPrisma) {
         super(a, b, tinggi, sisi1, sisi2);
         if (tinggiPrisma <= 0)
             throw new IllegalArgumentException("Tinggi prisma harus > 0");
         this.tinggiPrisma = tinggiPrisma;
+        this.nama = "Prisma Trapesium";
     }
 
     public Double hitungVolume() {
-        return super.hitungLuas() * tinggiPrisma;
+        volume = super.hitungLuas() * tinggiPrisma;
+        return volume;
     }
 
     public Double hitungLuasPermukaan() {
-        return (2 * super.hitungLuas()) + (super.hitungKeliling() * tinggiPrisma);
+        luasPermukaan = (2 * super.hitungLuas()) + (super.hitungKeliling() * tinggiPrisma);
+        return luasPermukaan;
+    }
+
+    @Override
+    public String getNama() {
+        return nama;
     }
 }

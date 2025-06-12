@@ -13,7 +13,7 @@ public class Kubus extends Persegi {
         if (sisi <= 0) {
             throw new IllegalArgumentException("Sisi tidak boleh kosong dan harus lebih besar dari nol");
         }
-        this.nama = "strata3D.Kubus";
+        this.nama = "Kubus";
         this.Volume = hitungVolume();
         this.LuasPermukaan = hitungLuasPermukaan();
         this.PanjangRusuk = hitungPanjangRusuk();
@@ -33,7 +33,7 @@ public class Kubus extends Persegi {
 
     public Double hitungVolume() {
         // Menghitung volume kubus
-        Volume = super.sisi * super.sisi * super.sisi; // sisi^3
+        Volume = super.luas * super.sisi; // sisi^3
         return Volume;
     }
 

@@ -11,7 +11,7 @@ public class Persegi extends Bangun2D {
             throw new IllegalArgumentException("Sisi tidak boleh kosong dan harus lebih besar dari nol");
         }
         this.sisi = sisi;
-        this.nama = "strata2D.Persegi";
+        this.nama = "Persegi";
         this.luas = hitungLuas();
         this.keliling = hitungKeliling();
     }

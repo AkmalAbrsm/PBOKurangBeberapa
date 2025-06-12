@@ -3,6 +3,7 @@ package strata2D;
 public class JajarGenjang extends Bangun2D {
     private String nama;
     private Double alas, tinggi, sisiMiring;
+    protected Double keliling, luas;
 
     public JajarGenjang(Double alas, Double tinggi, Double sisiMiring) {
         if (alas <= 0 || tinggi <= 0 || sisiMiring <= 0)
@@ -10,17 +11,35 @@ public class JajarGenjang extends Bangun2D {
         this.alas = alas;
         this.tinggi = tinggi;
         this.sisiMiring = sisiMiring;
-        this.nama = "strata2D.JajarGenjang";
+        this.nama = "Jajar Genjang";
     }
 
     @Override
     public Double hitungLuas() {
-        return alas * tinggi;
+        luas = alas * tinggi;
+        return luas;
     }
 
     @Override
     public Double hitungKeliling() {
-        return 2 * (alas + sisiMiring);
+        keliling = 2 * (alas + sisiMiring);
+        return keliling;
+    }
+
+    public Double hitungLuas(Double alasBaru, Double tinggiBaru) {
+        if (alasBaru <= 0 || tinggiBaru <= 0) {
+            throw new IllegalArgumentException("Alas dan tinggi baru harus > 0");
+        }
+        luas = alasBaru * tinggiBaru;
+        return luas;
+    }
+
+    public Double hitungKeliling(Double alasBaru, Double sisiMiringBaru) {
+        if (alasBaru <= 0 || sisiMiringBaru <= 0) {
+            throw new IllegalArgumentException("Alas dan sisi miring baru harus > 0");
+        }
+        keliling = 2 * (alasBaru + sisiMiringBaru);
+        return keliling;
     }
 
     @Override

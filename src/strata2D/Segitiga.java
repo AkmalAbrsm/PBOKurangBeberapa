@@ -12,19 +12,31 @@ public class Segitiga extends Bangun2D {
         this.alas = alas;
         this.tinggi = tinggi;
         this.sisiMiring = sisiMiring;
-        this.nama = "strata2D.Segitiga";
+        this.nama = "Segitiga";
         this.luas = hitungLuas();
         this.keliling = hitungKeliling();
     }
 
     @Override
     public Double hitungLuas() {
-        return (alas * tinggi) / 2;
+        luas = (alas * tinggi) / 2;
+        return luas;
     }
 
     @Override
     public Double hitungKeliling() {
-        return alas + tinggi + sisiMiring;
+        keliling = alas + tinggi + sisiMiring;
+        return keliling;
+    }
+
+    public Double hitungLuas(Double alasBaru, Double tinggiBaru) {
+        luas = (alasBaru * tinggiBaru) / 2;
+        return luas;
+    }
+
+    public Double hitungKeliling(Double alasBaru, Double tinggiBaru, Double sisiMiringBaru) {
+        keliling = alasBaru + tinggiBaru + sisiMiringBaru;
+        return keliling;
     }
 
     @Override

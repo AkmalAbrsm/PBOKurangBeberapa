@@ -4,19 +4,43 @@ import strata2D.*;
 
 public class LimasBelahKetupat extends BelahKetupat {
     private Double tinggi;
+    protected Double volume, luasPermukaan;
 
     public LimasBelahKetupat(Double d1, Double d2, Double sisi, Double tinggi) {
         super(d1, d2, sisi);
         if (tinggi <= 0) throw new IllegalArgumentException("Tinggi harus > 0");
         this.tinggi = tinggi;
-        this.nama = "strata3D.LimasBelahKetupat";
+        this.nama = "Limas Belah Ketupat";
     }
 
     public Double hitungVolume() {
-        return (super.hitungLuas() * tinggi) / 3;
+        volume = (super.hitungLuas() * tinggi) / 3;
+        return volume;
     }
 
     public Double hitungLuasPermukaan() {
-        return super.hitungLuas() + (4 * ((sisi * tinggi) / 2));
+        luasPermukaan = super.hitungLuas() + (4 * ((sisi * tinggi) / 2));
+        return luasPermukaan;
+    }
+
+    public Double hitungLuasPermukaan(Double d1baru, Double d2baru, Double sisibaru, Double tinggibaru) {
+        if (d1baru <= 0 || d2baru <= 0 || sisibaru <= 0 || tinggibaru <= 0) {
+            throw new IllegalArgumentException("Diagonal, sisi, dan tinggi harus lebih besar dari nol");
+        }
+        luasPermukaan = (d1baru * d2baru / 2) + (4 * ((sisibaru * tinggibaru) / 2));
+        return luasPermukaan;
+    }
+
+    public Double hitungVolume(Double d1baru, Double d2baru, Double sisibaru, Double tinggibaru) {
+        if (d1baru <= 0 || d2baru <= 0 || sisibaru <= 0 || tinggibaru <= 0) {
+            throw new IllegalArgumentException("Diagonal, sisi, dan tinggi harus lebih besar dari nol");
+        }
+        volume = (d1baru * d2baru / 2 * tinggibaru) / 3;
+        return volume;
+    }
+
+    @Override
+    public String getNama() {
+        return nama;
     }
 }

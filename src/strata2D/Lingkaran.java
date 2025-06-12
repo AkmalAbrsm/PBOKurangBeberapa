@@ -11,7 +11,7 @@ public class Lingkaran extends Bangun2D {
             throw new IllegalArgumentException("Jari-jari tidak boleh kosong dan harus lebih besar dari nol");
         }
         this.jariJari = jariJari;
-        this.nama = "strata2D.Lingkaran";
+        this.nama = "Lingkaran";
         this.luas = hitungLuas();
         this.keliling = hitungKeliling();
     }
@@ -29,11 +29,13 @@ public class Lingkaran extends Bangun2D {
     }
 
     public Double hitungLuas(Double jariJariBaru) {
-        return Math.PI * jariJariBaru * jariJariBaru;
+        luas = Math.PI * jariJariBaru * jariJariBaru;
+        return luas;
     }
 
     public Double hitungKeliling(Double jariJariBaru) {
-        return 2 * Math.PI * jariJariBaru;
+        keliling = 2 * Math.PI * jariJariBaru;
+        return keliling;
     }
 
     @Override
