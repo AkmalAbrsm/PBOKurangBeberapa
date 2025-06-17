@@ -17,22 +17,22 @@ public class Bola extends Lingkaran {
     }
 
     public Double hitungVolume() {
-        volume = (4.0 / 3.0) * Math.PI * Math.pow(jariJari, 3);
+        volume = (4.0 / 3.0) * jariJari * super.luas;
         return volume;
     }
 
     public Double hitungLuasPermukaan() {
-        luasPermukaan = 4 * Math.PI * Math.pow(jariJari, 2);
+        luasPermukaan = 4 * super.luas;
         return luasPermukaan;
     }
 
     public Double hitungVolume(Double jariBaru) {
-        volume = (4.0 / 3.0) * Math.PI * Math.pow(jariBaru, 3);
+        volume = (4.0 / 3.0) * jariBaru * super.hitungLuas(jariBaru);
         return volume;
     }
 
     public Double hitungLuasPermukaan(Double jariBaru) {
-        luasPermukaan = 4 * Math.PI * Math.pow(jariBaru, 2);
+        luasPermukaan = 4 * super.hitungLuas(jariBaru);
         return luasPermukaan;
     }
 

@@ -18,13 +18,13 @@ public class Lingkaran extends Bangun2D {
 
     @Override
     public Double hitungLuas() {
-        luas = Math.PI * jariJari * jariJari;
+        luas = Math.PI * this.jariJari * this.jariJari;
         return luas;
     }
 
     @Override
     public Double hitungKeliling() {
-        keliling = 2 * Math.PI * jariJari;
+        keliling = 2 * Math.PI * this.jariJari;
         return keliling;
     }
 

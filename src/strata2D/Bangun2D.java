@@ -11,11 +11,8 @@ public abstract class Bangun2D implements BendaGeometri {
         return nama;
     }
 
-    public Double hitungLuas() {
-        return luas;
-    }
+    public abstract Double hitungLuas();
 
-    public Double hitungKeliling() {
-        return keliling;
-    }
+    public abstract Double hitungKeliling();
+
 }
