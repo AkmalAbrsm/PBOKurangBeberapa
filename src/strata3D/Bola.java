@@ -1,15 +1,16 @@
 package strata3D;
 
 import strata2D.*;
+import Exception.ArgumentException;
 
 public class Bola extends Lingkaran {
     private Double volume;
     private Double luasPermukaan;
 
-    public Bola(Double jariJari) {
+    public Bola(Double jariJari) throws ArgumentException {
         super(jariJari);
         if (jariJari <= 0) {
-            throw new IllegalArgumentException("Jari-jari tidak boleh kosong dan harus lebih besar dari nol");
+            throw new ArgumentException("Jari-jari tidak boleh kosong dan harus lebih besar dari nol");
         }
         this.nama = "Bola";
         this.volume = hitungVolume();

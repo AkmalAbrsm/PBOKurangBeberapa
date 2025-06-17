@@ -1,14 +1,15 @@
 package strata2D;
+import Exception.ArgumentException;
 
 public class TemberengLingkaran extends Lingkaran {
     private Double sudutDerajat;
     private Double luasTembereng;
     private Double kelilingTembereng;
 
-    public TemberengLingkaran(Double jariJari, Double sudutDerajat) {
+    public TemberengLingkaran(Double jariJari, Double sudutDerajat) throws ArgumentException {
         super(jariJari);
         if (sudutDerajat <= 0 || sudutDerajat > 360) {
-            throw new IllegalArgumentException("Sudut harus antara 0 dan 360 derajat");
+            throw new ArgumentException("Sudut harus antara 0 dan 360 derajat");
         }
         this.sudutDerajat = sudutDerajat;
         this.nama = "Tembereng Lingkaran";

@@ -1,4 +1,5 @@
 package strata3D;
+import Exception.ArgumentException;
 
 import strata2D.*;
 
@@ -7,9 +8,9 @@ public class PrismaJajarGenjang extends JajarGenjang {
     protected Double volume, luasPermukaan;
     private String nama;
 
-    public PrismaJajarGenjang(Double alas, Double tinggi, Double sisiMiring, Double tinggiPrisma) {
+    public PrismaJajarGenjang(Double alas, Double tinggi, Double sisiMiring, Double tinggiPrisma) throws ArgumentException {
         super(alas, tinggi, sisiMiring);
-        if (tinggiPrisma <= 0) throw new IllegalArgumentException("Tinggi prisma harus > 0");
+        if (tinggiPrisma <= 0) throw new ArgumentException("Tinggi prisma harus > 0");
         this.tinggiPrisma = tinggiPrisma;
         this.nama = "Prisma Jajar Genjang";
     }

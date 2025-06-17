@@ -1,14 +1,15 @@
 package strata3D;
+import Exception.ArgumentException;
 
 public class TemberengBola extends Bola {
     private Double tinggi;
     private Double volumeTembereng;
     private Double luasPermukaanTembereng;
 
-    public TemberengBola(Double jariJari, Double tinggi) {
+    public TemberengBola(Double jariJari, Double tinggi) throws ArgumentException {
         super(jariJari);
         if (tinggi <= 0 || tinggi > 2 * jariJari) {
-            throw new IllegalArgumentException("Tinggi harus lebih dari 0 dan tidak boleh melebihi diameter bola");
+            throw new ArgumentException("Tinggi harus lebih dari 0 dan tidak boleh melebihi diameter bola");
         }
         this.tinggi = tinggi;
         this.nama = "Tembereng Bola";

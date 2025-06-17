@@ -1,19 +1,20 @@
 package strata2D;
+import Exception.ArgumentException;
 
 public class Lingkaran extends Bangun2D {
     protected String nama;
     protected Double jariJari;
     protected Double luas;
-    private Double keliling;
+    protected Double keliling;
 
-    public Lingkaran(Double jariJari) {
+    public Lingkaran(Double jariJari) throws ArgumentException {
         if (jariJari <= 0) {
-            throw new IllegalArgumentException("Jari-jari tidak boleh kosong dan harus lebih besar dari nol");
+            throw new ArgumentException("Jari-jari tidak boleh kosong dan harus lebih besar dari nol");
         }
         this.jariJari = jariJari;
         this.nama = "Lingkaran";
-        this.luas = hitungLuas();
-        this.keliling = hitungKeliling();
+        this.luas = hitungLuas(jariJari); // Initialize luas here
+        this.keliling = hitungKeliling(jariJari);
     }
 
     @Override

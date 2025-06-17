@@ -1,16 +1,17 @@
 package strata3D;
 
 import strata2D.Lingkaran;
+import Exception.ArgumentException;
 
 public class Tabung extends Lingkaran {
     private Double tinggi;
     private Double volume;
     private Double luasPermukaan;
 
-    public Tabung(Double jariJari, Double tinggi) {
+    public Tabung(Double jariJari, Double tinggi) throws ArgumentException {
         super(jariJari);
         if (tinggi <= 0) {
-            throw new IllegalArgumentException("Tinggi tidak boleh kosong dan harus lebih besar dari nol");
+            throw new ArgumentException("Tinggi tidak boleh kosong dan harus lebih besar dari nol");
         }
         this.tinggi = tinggi;
         this.nama = "Tabung";

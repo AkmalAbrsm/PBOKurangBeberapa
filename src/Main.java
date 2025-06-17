@@ -1,5 +1,6 @@
 import strata2D.*;
 import strata3D.*;
+import Exception.ArgumentException;
 import Interface.BendaGeometri;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -10,13 +11,13 @@ public class Main {
         // You can create instances of geometric shapes here and perform operations on them.
         // Example usage;
         try {
-            Bola bola = new Bola(21.0); // Create a new Kubus with side length 4.0
-            System.out.println("Nama: " + bola.getNama());
-            System.out.println("Luas Permukaan : " + bola.hitungLuasPermukaan());
-            System.out.println("Volume : " + bola.hitungVolume());
-            System.out.println("Volume Baru : " + bola.hitungVolume(10.0));
+            LayangLayang layangLayang = new LayangLayang(1.0, 3.0,2.0, 5.0); // Create a new Kubus with side length 4.0
+            System.out.println("Nama : " + layangLayang.getNama());
+            System.out.println("Luas : " + layangLayang.hitungLuas());
+            System.out.println("Volume : " + layangLayang.hitungKeliling());
 
-        } catch (IllegalArgumentException e) {
+
+        } catch (ArgumentException e) {
             System.err.println(e.getMessage());
         }
     }

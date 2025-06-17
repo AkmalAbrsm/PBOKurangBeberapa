@@ -1,4 +1,5 @@
 package strata3D;
+import Exception.ArgumentException;
 
 import strata2D.*;
 
@@ -6,9 +7,9 @@ public class LimasBelahKetupat extends BelahKetupat {
     private Double tinggi;
     protected Double volume, luasPermukaan;
 
-    public LimasBelahKetupat(Double d1, Double d2, Double sisi, Double tinggi) {
+    public LimasBelahKetupat(Double d1, Double d2, Double sisi, Double tinggi) throws ArgumentException {
         super(d1, d2, sisi);
-        if (tinggi <= 0) throw new IllegalArgumentException("Tinggi harus > 0");
+        if (tinggi <= 0) throw new ArgumentException("Tinggi harus > 0");
         this.tinggi = tinggi;
         this.nama = "Limas Belah Ketupat";
     }

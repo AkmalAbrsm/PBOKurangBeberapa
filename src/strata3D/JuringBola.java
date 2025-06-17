@@ -1,14 +1,15 @@
 package strata3D;
+import Exception.ArgumentException;
 
 public class JuringBola extends Bola {
     private Double sudutDerajat;
     private Double volumeJuring;
     private Double luasPermukaanJuring;
 
-    public JuringBola(Double jariJari, Double sudutDerajat) {
+    public JuringBola(Double jariJari, Double sudutDerajat) throws ArgumentException {
         super(jariJari);
         if (sudutDerajat <= 0 || sudutDerajat > 360) {
-            throw new IllegalArgumentException("Sudut harus antara 0 dan 360 derajat");
+            throw new ArgumentException("Sudut harus antara 0 dan 360 derajat");
         }
         this.sudutDerajat = sudutDerajat;
         this.nama = "Juring Bola";
