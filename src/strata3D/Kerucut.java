@@ -5,7 +5,6 @@ import Exception.ArgumentException;
 
 public class Kerucut extends Lingkaran {
     public Double tinggi;
-    public Double garisPelukis;
     public Double volume; // Remove initialization
     public Double luasPermukaan; // Remove initialization
     public String nama;
@@ -16,7 +15,6 @@ public class Kerucut extends Lingkaran {
             throw new ArgumentException("Tinggi dan garis pelukis harus lebih besar dari nol");
         }
         this.tinggi = tinggi;
-        this.garisPelukis = garisPelukis;
         this.nama = "Kerucut";
 
         // --- FIX: REMOVE THESE LINES ---
@@ -30,7 +28,7 @@ public class Kerucut extends Lingkaran {
     }
 
     public Double hitungLuasPermukaan() {
-        luasPermukaan = super.luas + Math.PI * jariJari * garisPelukis;
+        luasPermukaan = super.luas + Math.PI * jariJari * Math.sqrt((jariJari * jariJari) + (tinggi * tinggi));
         return luasPermukaan;
     }
 
@@ -44,12 +42,12 @@ public class Kerucut extends Lingkaran {
         return volume;
     }
 
-    public Double hitungLuasPermukaan(Double jariBaru, Double garisPelukisBaru) throws ArgumentException {
-        if (jariBaru <= 0 || garisPelukisBaru <= 0) {
+    public Double hitungLuasPermukaan(Double jariBaru, Double tinggiBaru) throws ArgumentException {
+        if (jariBaru <= 0 || tinggiBaru <= 0) {
             throw new ArgumentException("Jari-jari dan garis pelukis harus lebih besar dari nol");
         }
         Double luasBaru = Math.PI * jariBaru * jariBaru;
-        luasPermukaan = luasBaru + Math.PI * jariBaru * garisPelukisBaru;
+        luasPermukaan = luasBaru + Math.PI * jariBaru * Math.sqrt((jariBaru * jariBaru) + (tinggiBaru * tinggiBaru));
         return luasPermukaan;
     }
 
