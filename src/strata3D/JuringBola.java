@@ -1,4 +1,5 @@
 package strata3D;
+
 import Exception.ArgumentException;
 
 public class JuringBola extends Bola {

@@ -11,10 +11,10 @@ public class Main {
         // You can create instances of geometric shapes here and perform operations on them.
         // Example usage;
         try {
-            LayangLayang layangLayang = new LayangLayang(1.0, 3.0,2.0, 5.0); // Create a new Kubus with side length 4.0
-            System.out.println("Nama : " + layangLayang.getNama());
-            System.out.println("Luas : " + layangLayang.hitungLuas());
-            System.out.println("Volume : " + layangLayang.hitungKeliling());
+            PrismaBelahKetupat kerucutTerpancung = new PrismaBelahKetupat(4.0, 3.0, 2.0, 5.0); // Create a new Kubus with side length 4.0
+            System.out.println("Nama : " + kerucutTerpancung.getNama());
+            System.out.println("Luas : " + kerucutTerpancung.hitungVolume());
+            System.out.println("Volume : " + kerucutTerpancung.hitungLuasPermukaan());
 
 
         } catch (ArgumentException e) {

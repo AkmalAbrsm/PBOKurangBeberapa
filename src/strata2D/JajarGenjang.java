@@ -2,9 +2,9 @@ package strata2D;
 import Exception.ArgumentException;
 
 public class JajarGenjang extends Bangun2D {
-    private String nama;
-    private Double alas, tinggi, sisiMiring;
-    protected Double keliling, luas;
+    public String nama;
+    public Double alas, tinggi, sisiMiring;
+    public Double keliling, luas;
 
     public JajarGenjang(Double alas, Double tinggi, Double sisiMiring) throws ArgumentException {
         if (alas <= 0 || tinggi <= 0 || sisiMiring <= 0)
@@ -13,6 +13,8 @@ public class JajarGenjang extends Bangun2D {
         this.tinggi = tinggi;
         this.sisiMiring = sisiMiring;
         this.nama = "Jajar Genjang";
+        this.luas = hitungLuas();
+        this.keliling = hitungKeliling();
     }
 
     @Override

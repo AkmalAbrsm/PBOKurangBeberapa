@@ -2,10 +2,10 @@ package strata2D;
 import Exception.ArgumentException;
 
 public class BelahKetupat extends Bangun2D {
-    protected String nama;
-    protected Double d1, d2;
-    protected Double sisi;
-    protected Double luas, keliling;
+    public String nama;
+    public Double d1, d2;
+    public Double sisi;
+    public Double luas, keliling;
 
     public BelahKetupat(Double d1, Double d2, Double sisi) throws ArgumentException {
         if (d1 <= 0 || d2 <= 0 || sisi <= 0) {
@@ -15,6 +15,8 @@ public class BelahKetupat extends Bangun2D {
         this.d2 = d2;
         this.sisi = sisi;
         this.nama = "Belah Ketupat";
+        this.luas = hitungLuas();
+        this.keliling = hitungKeliling();
     }
 
     @Override

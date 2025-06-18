@@ -2,9 +2,9 @@ package strata2D;
 import Exception.ArgumentException;
 
 public class TemberengLingkaran extends Lingkaran {
-    private Double sudutDerajat;
-    private Double luasTembereng;
-    private Double kelilingTembereng;
+    public Double sudutDerajat;
+    public Double luasTembereng;
+    public Double kelilingTembereng;
 
     public TemberengLingkaran(Double jariJari, Double sudutDerajat) throws ArgumentException {
         super(jariJari);
@@ -19,28 +19,28 @@ public class TemberengLingkaran extends Lingkaran {
 
     @Override
     public Double hitungLuas() {
-        double luasJuring = Math.PI * jariJari * jariJari * (sudutDerajat / 360);
-        double luasSegitiga = 0.5 * jariJari * jariJari * Math.sin(Math.toRadians(sudutDerajat));
+        double luasJuring = super.luas * (this.sudutDerajat / 360);
+        double luasSegitiga = 0.5 * this.jariJari * this.jariJari * Math.sin(Math.toRadians(this.sudutDerajat));
         luasTembereng = luasJuring - luasSegitiga;
         return luasTembereng;
     }
 
     @Override
     public Double hitungKeliling() {
-        double panjangBusur = 2 * Math.PI * jariJari * (sudutDerajat / 360);
-        double chord = 2 * jariJari * Math.sin(Math.toRadians(sudutDerajat / 2));
+        double panjangBusur = super.keliling * (this.sudutDerajat / 360);
+        double chord = 2 * this.jariJari * Math.sin(Math.toRadians(this.sudutDerajat / 2));
         kelilingTembereng = chord + panjangBusur;
         return kelilingTembereng;
     }
 
     public Double hitungLuas(Double jariJariBaru, Double sudutDerajatBaru) {
-        double luasJuring = Math.PI * jariJariBaru * jariJariBaru * (sudutDerajatBaru / 360);
+        double luasJuring = super.hitungLuas(jariJariBaru) * (sudutDerajatBaru / 360);
         double luasSegitiga = 0.5 * jariJariBaru * jariJariBaru * Math.sin(Math.toRadians(sudutDerajatBaru));
         return luasJuring - luasSegitiga;
     }
 
     public Double hitungKeliling(Double jariJariBaru, Double sudutDerajatBaru) {
-        double panjangBusur = 2 * Math.PI * jariJariBaru * (sudutDerajatBaru / 360);
+        double panjangBusur = super.hitungKeliling(jariJariBaru) * (sudutDerajatBaru / 360);
         double chord = 2 * jariJariBaru * Math.sin(Math.toRadians(sudutDerajatBaru / 2));
         return chord + panjangBusur;
     }

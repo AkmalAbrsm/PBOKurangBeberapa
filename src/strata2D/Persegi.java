@@ -1,14 +1,15 @@
 package strata2D;
+import Exception.ArgumentException;
 
 public class Persegi extends Bangun2D {
-    protected String nama; // Nama persegi
-    protected Double sisi; // Sisi persegi
-    protected Double luas; // Luas persegi
-    private Double keliling; // Keliling persegi
+    public String nama; // Nama persegi
+    public Double sisi; // Sisi persegi
+    public Double luas; // Luas persegi
+    public Double keliling; // Keliling persegi
 
-    public Persegi(Double sisi) {
+    public Persegi(Double sisi) throws ArgumentException {
         if (sisi <= 0) {
-            throw new IllegalArgumentException("Sisi tidak boleh kosong dan harus lebih besar dari nol");
+            throw new ArgumentException("Sisi tidak boleh kosong dan harus lebih besar dari nol");
         }
         this.sisi = sisi;
         this.nama = "Persegi";
@@ -19,14 +20,14 @@ public class Persegi extends Bangun2D {
     @Override
     public Double hitungLuas() {
         // Menghitung luas persegi
-        luas = sisi * sisi;
+        luas = this.sisi * this.sisi;
         return luas;
     }
 
     @Override
     public Double hitungKeliling() {
         // Menghitung keliling persegi
-        keliling = 4 * sisi;
+        keliling = 4 * this.sisi;
         return keliling;
     }
 

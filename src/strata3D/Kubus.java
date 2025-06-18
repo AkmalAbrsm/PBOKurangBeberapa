@@ -1,6 +1,7 @@
 package strata3D;
 
 import strata2D.*;
+import Exception.ArgumentException;
 
 public class Kubus extends Persegi {
 
@@ -8,10 +9,10 @@ public class Kubus extends Persegi {
     private Double LuasPermukaan;
     private Double PanjangRusuk;
 
-    public Kubus(Double sisi) {
+    public Kubus(Double sisi) throws ArgumentException {
         super(sisi); // Memanggil konstruktor strata2D.Persegi
         if (sisi <= 0) {
-            throw new IllegalArgumentException("Sisi tidak boleh kosong dan harus lebih besar dari nol");
+            throw new ArgumentException("Sisi tidak boleh kosong dan harus lebih besar dari nol");
         }
         this.nama = "Kubus";
         this.Volume = hitungVolume();
@@ -38,7 +39,7 @@ public class Kubus extends Persegi {
     }
 
     public Double hitungLuasPermukaan(Double sisibaru) {
-        LuasPermukaan = (sisibaru * sisibaru) * 6; // Luas permukaan kubus dengan sisi baru
+        LuasPermukaan = super.hitungLuas(sisibaru) * 6; // Luas permukaan kubus dengan sisi baru
         return LuasPermukaan;
     }
 

@@ -1,27 +1,31 @@
 package strata2D;
 
-public class PersegiPanjang extends Bangun2D {
-    protected Double panjang, lebar;
-    protected String nama;
-    protected Double luas, keliling;
+import Exception.ArgumentException;
 
-    public PersegiPanjang(Double panjang, Double lebar) {
+public class PersegiPanjang extends Bangun2D {
+    public Double panjang, lebar;
+    public String nama;
+    public Double luas, keliling;
+
+    public PersegiPanjang(Double panjang, Double lebar) throws ArgumentException {
         if (panjang <= 0 || lebar <= 0)
-            throw new IllegalArgumentException("Panjang dan lebar harus > 0");
+            throw new ArgumentException("Panjang dan lebar harus > 0");
         this.panjang = panjang;
         this.lebar = lebar;
         this.nama = ".Persegi Panjang";
+        this.luas = hitungLuas();
+        this.keliling = hitungKeliling();
     }
 
     @Override
     public Double hitungLuas() {
-        luas = panjang * lebar;
+        luas = this.panjang * this.lebar;
         return luas;
     }
 
     @Override
     public Double hitungKeliling() {
-        keliling = 2 * (panjang + lebar);
+        keliling = 2 * (this.panjang + this.lebar);
         return keliling;
     }
 

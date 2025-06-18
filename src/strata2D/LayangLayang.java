@@ -1,16 +1,15 @@
 package strata2D;
 
-import Exception.ArgumentException; // Assuming this custom exception exists
+import Exception.ArgumentException;
 
 public class LayangLayang extends Bangun2D {
-    // All fields are private to follow the reference pattern
-    protected String nama;
-    protected Double d1, d2, sisiPendek, sisiPanjang;
-    protected Double luasLayangLayang;
-    protected Double kelilingLayangLayang;
+
+    public String nama;
+    public Double d1, d2, sisiPendek, sisiPanjang;
+    public Double luasLayangLayang;
+    public Double kelilingLayangLayang;
 
     public LayangLayang(Double d1, Double d2, Double sisiPendek, Double sisiPanjang) throws ArgumentException {
-        // Use the custom ArgumentException
         if (d1 <= 0 || d2 <= 0 || sisiPendek <= 0 || sisiPanjang <= 0)
             throw new ArgumentException("Semua nilai harus > 0");
 
@@ -19,8 +18,6 @@ public class LayangLayang extends Bangun2D {
         this.sisiPendek = sisiPendek;
         this.sisiPanjang = sisiPanjang;
         this.nama = "Layang-Layang";
-
-        // Initialize area and perimeter upon object creation, as per the pattern
         this.luasLayangLayang = hitungLuas();
         this.kelilingLayangLayang = hitungKeliling();
     }
