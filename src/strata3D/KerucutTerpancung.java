@@ -12,8 +12,7 @@ public class KerucutTerpancung extends Kerucut {
         // Call to super() remains the same
         super(
                 jariJariBawah,
-                (tinggi * jariJariBawah) / (jariJariBawah - jariJariAtas),
-                (Math.sqrt(Math.pow(tinggi, 2) + Math.pow(jariJariBawah - jariJariAtas, 2)) * jariJariBawah) / (jariJariBawah - jariJariAtas)
+                (tinggi * jariJariBawah) / (jariJariBawah - jariJariAtas)
         );
 
         if (tinggi <= 0 || jariJariAtas <= 0 || jariJariBawah <= jariJariAtas) {

@@ -9,10 +9,10 @@ public class Kerucut extends Lingkaran {
     public Double luasPermukaan; // Remove initialization
     public String nama;
 
-    public Kerucut(Double jariJari, Double tinggi, Double garisPelukis) throws ArgumentException {
+    public Kerucut(Double jariJari, Double tinggi) throws ArgumentException {
         super(jariJari);
-        if (tinggi <= 0 || garisPelukis <= 0) {
-            throw new ArgumentException("Tinggi dan garis pelukis harus lebih besar dari nol");
+        if (tinggi <= 0) {
+            throw new ArgumentException("Tinggi harus lebih besar dari nol");
         }
         this.tinggi = tinggi;
         this.nama = "Kerucut";

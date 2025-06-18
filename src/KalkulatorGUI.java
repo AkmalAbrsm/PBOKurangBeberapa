@@ -504,7 +504,7 @@ public class KalkulatorGUI extends JFrame {
             result.append(String.format("Volume: %.2f\n", obj.hitungVolume()));
             result.append(String.format("Luas Permukaan: %.2f\n", obj.hitungLuasPermukaan()));
         } else if (currentShape.equals("Kerucut")) {
-            Kerucut obj = new Kerucut(v[0], v[1], v[2]);
+            Kerucut obj = new Kerucut(v[0], v[1]);
             result.append(String.format("Jari-Jari: %.2f, Tinggi: %.2f, Garis Pelukis: %.2f\n", v[0], v[1], v[2]));
             result.append(String.format("Volume: %.2f\n", obj.hitungVolume()));
             result.append(String.format("Luas Permukaan: %.2f\n", obj.hitungLuasPermukaan()));
@@ -574,7 +574,7 @@ public class KalkulatorGUI extends JFrame {
         shapeFields.put("Juring Lingkaran", new String[]{"Jari-Jari", "Sudut (derajat)"});
         shapeFields.put("Tembereng Lingkaran", new String[]{"Jari-Jari", "Sudut (derajat)"});
         shapeFields.put("Tabung", new String[]{"Jari-Jari", "Tinggi"});
-        shapeFields.put("Kerucut", new String[]{"Jari-Jari", "Tinggi", "Garis Pelukis"});
+        shapeFields.put("Kerucut", new String[]{"Jari-Jari", "Tinggi"});
         shapeFields.put("Kerucut Terpancung", new String[]{"Jari-Jari Bawah", "Jari-Jari Atas", "Tinggi"});
         shapeFields.put("Bola", new String[]{"Jari-Jari"});
         shapeFields.put("Tembereng Bola", new String[]{"Jari-Jari Bola", "Tinggi Tembereng"});

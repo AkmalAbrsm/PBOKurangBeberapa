@@ -97,8 +97,8 @@ public class CalculationTask implements Runnable {
                 result.append(String.format("Volume: %.2f\n", obj.hitungVolume()));
                 result.append(String.format("Luas Permukaan: %.2f\n", obj.hitungLuasPermukaan()));
             } else if (shapeName.equals("Kerucut")) {
-                Kerucut obj = new Kerucut(values[0], values[1], values[2]);
-                result.append(String.format("Jari-Jari: %.2f, Tinggi: %.2f, Garis Pelukis: %.2f\n", values[0], values[1], values[2]));
+                Kerucut obj = new Kerucut(values[0], values[1]);
+                result.append(String.format("Jari-Jari: %.2f, Tinggi: %.2f\n", values[0], values[1]));
                 result.append(String.format("Volume: %.2f\n", obj.hitungVolume()));
                 result.append(String.format("Luas Permukaan: %.2f\n", obj.hitungLuasPermukaan()));
             } else if (shapeName.equals("Kerucut Terpancung")) {
