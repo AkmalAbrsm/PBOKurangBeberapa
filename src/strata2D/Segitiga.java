@@ -26,7 +26,7 @@ public class Segitiga extends Bangun2D {
 
     @Override
     public Double hitungKeliling() {
-        keliling = this.alas + this.tinggi + Math.sqrt(((this.alas / 2) * (this.alas / 2)) + this.tinggi * this.tinggi);
+        keliling = this.alas + Math.sqrt(((this.alas / 2) * (this.alas / 2)) + this.tinggi * this.tinggi) * 2;
         return keliling;
     }
 
