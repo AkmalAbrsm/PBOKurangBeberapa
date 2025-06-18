@@ -13,8 +13,6 @@ public class PrismaLayangLayang extends LayangLayang {
 
 
     public PrismaLayangLayang(Double d1, Double d2, Double sisiPendek, Double sisiPanjang, Double tinggiPrisma) throws ArgumentException {
-        // Initialize the base shape by calling the parent constructor.
-        // This calculates the base's area (luasLayangLayang) and perimeter (kelilingLayangLayang).
         super(d1, d2, sisiPendek, sisiPanjang);
 
         // Validate the prism's own dimension
