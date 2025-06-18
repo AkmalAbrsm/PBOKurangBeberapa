@@ -1,22 +1,173 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-// Import all shape and exception classes
+// Import semua kelas bentuk dan exception (asumsi kelas-kelas ini ada dalam struktur proyek Anda)
 import strata2D.*;
 import strata3D.*;
 import Exception.ArgumentException;
 
 /**
- * A GUI application for calculating properties of various geometric shapes.
- * This class creates a window with a menu bar to select a shape.
- * Based on the selection, it dynamically generates input fields for the shape's dimensions.
- * A "Hitung" button performs the calculations and displays the results.
+ * Custom Border untuk sudut membulat.
+ * Memberikan tampilan yang lebih lembut pada elemen UI.
+ */
+class RoundedBorder implements Border {
+    private int radius;
+    private Color color;
+
+    /**
+     * Konstruktor untuk RoundedBorder.
+     * @param radius Radius pembulatan sudut.
+     * @param color Warna garis border.
+     */
+    RoundedBorder(int radius, Color color) {
+        this.radius = radius;
+        this.color = color;
+    }
+
+    /**
+     * Mendapatkan insets (padding) dari border.
+     * @param c Komponen yang menggunakan border ini.
+     * @return Objek Insets yang mendefinisikan padding.
+     */
+    public Insets getBorderInsets(Component c) {
+        return new Insets(radius + 1, radius + 1, radius + 2, radius);
+    }
+
+    /**
+     * Memeriksa apakah border bersifat opak.
+     * @return True jika border opak, false sebaliknya.
+     */
+    public boolean isBorderOpaque() {
+        return true; // Border itu sendiri buram
+    }
+
+    /**
+     * Menggambar border pada komponen.
+     * Menggunakan Anti-aliasing untuk pembulatan yang halus.
+     * @param c Komponen yang akan digambar bordernya.
+     * @param g Objek Graphics.
+     * @param x Koordinat X awal.
+     * @param y Koordinat Y awal.
+     * @param width Lebar area gambar.
+     * @param height Tinggi area gambar.
+     */
+    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setColor(color);
+        g2.draw(new RoundRectangle2D.Double(x, y, width - 1, height - 1, radius, radius));
+        g2.dispose();
+    }
+}
+
+/**
+ * Custom JButton yang menggambar latar belakang gradien dan memiliki sudut membulat.
+ * Memberikan efek visual yang modern dan menarik pada tombol.
+ */
+class GradientButton extends JButton {
+    private Color startColor;
+    private Color endColor;
+    private Color originalStartColor;
+    private Color originalEndColor;
+    private int cornerRadius;
+
+    /**
+     * Konstruktor untuk GradientButton.
+     * @param text Teks yang akan ditampilkan pada tombol.
+     * @param start Warna awal untuk gradien.
+     * @param end Warna akhir untuk gradien.
+     * @param radius Radius pembulatan sudut tombol.
+     */
+    public GradientButton(String text, Color start, Color end, int radius) {
+        super(text);
+        this.startColor = start;
+        this.endColor = end;
+        this.originalStartColor = start; // Menyimpan warna asli untuk efek hover
+        this.originalEndColor = end;
+        this.cornerRadius = radius;
+        setContentAreaFilled(false); // Penting: Jangan gambar latar belakang tombol default
+        setFocusPainted(false);      // Hapus persegi panjang fokus
+        setBorderPainted(false);     // Kami akan menggambar latar belakang/border kami sendiri
+        setForeground(Color.WHITE);  // Warna teks default
+
+        // Tambahkan efek hover
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // Sedikit menggelapkan warna saat hover
+                startColor = new Color(Math.max(0, originalStartColor.getRed() - 20),
+                        Math.max(0, originalStartColor.getGreen() - 20),
+                        Math.max(0, originalStartColor.getBlue() - 20));
+                endColor = new Color(Math.max(0, originalEndColor.getRed() - 20),
+                        Math.max(0, originalEndColor.getGreen() - 20),
+                        Math.max(0, originalEndColor.getBlue() - 20));
+                setCursor(new Cursor(Cursor.HAND_CURSOR)); // Ganti kursor saat hover
+                repaint();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // Mengembalikan warna asli
+                startColor = originalStartColor;
+                endColor = originalEndColor;
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR)); // Kembalikan kursor default
+                repaint();
+            }
+        });
+    }
+
+    /**
+     * Menggambar komponen tombol.
+     * Menggambar latar belakang gradien berbentuk persegi panjang membulat.
+     * @param g Objek Graphics.
+     */
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        // Buat cat gradien
+        GradientPaint gp = new GradientPaint(0, 0, startColor, 0, getHeight(), endColor);
+        g2.setPaint(gp);
+
+        // Isi persegi panjang membulat
+        g2.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius));
+
+        g2.dispose();
+        super.paintComponent(g); // Gambar teks dan ikon setelah latar belakang
+    }
+
+    /**
+     * Menggambar border tombol.
+     * Kami menangani border sebagai bagian dari paintComponent dengan mengisi area.
+     * Tidak perlu menggambar border terpisah di sini.
+     * @param g Objek Graphics.
+     */
+    @Override
+    protected void paintBorder(Graphics g) {
+        // Kami menangani border painting di paintComponent atau bergantung pada fill,
+        // atau menambahkan border tipis di sini jika diinginkan, mis. menggunakan RoundedBorder.
+        // Untuk kesederhanaan, mari kita hilangkan border terpisah untuk saat ini, mengandalkan fill gradien.
+    }
+}
+
+
+/**
+ * Aplikasi GUI untuk menghitung properti berbagai bentuk geometri.
+ * Kelas ini membuat jendela dengan bilah menu untuk memilih bentuk.
+ * Berdasarkan pilihan, secara dinamis menghasilkan bidang input untuk dimensi bentuk.
+ * Tombol "Hitung" melakukan perhitungan dan menampilkan hasilnya.
  */
 public class KalkulatorGUI extends JFrame {
 
@@ -28,86 +179,135 @@ public class KalkulatorGUI extends JFrame {
     private String currentShape;
     private java.util.List<JTextField> inputFields = new ArrayList<>();
     private java.util.List<JLabel> inputLabels = new ArrayList<>();
-    // A map to store the labels for each shape's input fields.
+    // Sebuah peta untuk menyimpan label untuk setiap bidang input bentuk.
     private final Map<String, String[]> shapeFields = new LinkedHashMap<>();
 
+    /**
+     * Konstruktor KalkulatorGUI.
+     * Menginisialisasi peta bidang bentuk dan menyiapkan UI utama.
+     */
     public KalkulatorGUI() {
-        // Initialize the map with required fields for each shape
+        // Inisialisasi peta dengan bidang yang diperlukan untuk setiap bentuk
         initializeShapeFields();
-        // Setup the main window
+        // Siapkan jendela utama
         initUI();
     }
 
     /**
-     * Initializes the main frame and its components.
+     * Menginisialisasi frame utama dan komponen-komponennya.
+     * Metode ini bertanggung jawab untuk mengatur estetika GUI.
      */
     private void initUI() {
-        setTitle("Kalkulator Geometri Berbasis Bentuk Dasar");
-        setSize(800, 600);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setTitle("Kalkulator Geometri Tingkat Lanjut"); // Judul yang lebih menarik
+        setSize(850, 650); // Ukuran jendela sedikit lebih besar
+        setLocationRelativeTo(null); // Pusat jendela di layar
+        setDefaultCloseOperation(EXIT_ON_CLOSE); // Keluar dari aplikasi saat menutup jendela
 
-        // Set up the menu bar
+        // Atur bilah menu
         setJMenuBar(createMenuBar());
 
-        // Main container panel with a border layout
-        JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
-        mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        // Panel kontainer utama dengan border layout
+        JPanel mainPanel = new JPanel(new BorderLayout(20, 20)); // Jeda yang diperbesar antar komponen
+        mainPanel.setBorder(new EmptyBorder(25, 25, 25, 25)); // Padding yang lebih besar di sekitar konten
+        mainPanel.setBackground(new Color(240, 244, 248)); // Warna latar belakang abu-abu terang (Light Slate Gray)
 
-        // Panel for title and dynamic inputs
+        // Panel untuk judul dan input dinamis
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+        topPanel.setBackground(new Color(240, 244, 248)); // Samakan dengan latar belakang utama
 
         titleLabel = new JLabel("Pilih bentuk geometri dari menu di atas");
-        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
-        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 28)); // Font lebih besar, tebal, dan modern
+        titleLabel.setForeground(new Color(35, 47, 52)); // Warna teks judul sangat gelap
+        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Pusatkan judul
 
-        inputPanel = new JPanel(new GridLayout(0, 2, 5, 5)); // Dynamic grid layout
-        inputPanel.setBorder(new EmptyBorder(15, 0, 15, 0));
+        inputPanel = new JPanel(new GridLayout(0, 2, 10, 10)); // Tata letak grid dinamis, jeda yang diperbesar
+        inputPanel.setBorder(BorderFactory.createCompoundBorder(
+                new EmptyBorder(20, 20, 20, 20), // Padding internal untuk panel input
+                BorderFactory.createLineBorder(new Color(220, 220, 220), 1, true) // Border garis tipis dengan sudut membulat
+        ));
+        inputPanel.setBackground(new Color(255, 255, 255)); // Latar belakang putih untuk bidang input agar jelas
 
         topPanel.add(titleLabel);
-        topPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        topPanel.add(Box.createRigidArea(new Dimension(0, 25))); // Ruang lebih banyak di bawah judul
         topPanel.add(inputPanel);
 
         mainPanel.add(topPanel, BorderLayout.NORTH);
 
-        // Calculate button
-        calculateButton = new JButton("Hitung");
-        calculateButton.setFont(new Font("SansSerif", Font.BOLD, 14));
-        calculateButton.addActionListener(new CalculateButtonListener());
+        // Tombol Hitung
+        // Menggunakan GradientButton kustom untuk tampilan yang lebih menarik
+        calculateButton = new GradientButton("Hitung", new Color(26, 188, 156), new Color(22, 160, 133), 15); // Gradien Turquoise ke Green Sea, radius 15px
+        calculateButton.setFont(new Font("Segoe UI", Font.BOLD, 18)); // Font lebih besar dan tebal untuk tombol
+        calculateButton.setPreferredSize(new Dimension(200, 50)); // Atur ukuran yang disukai untuk tombol yang lebih menonjol
+        calculateButton.addActionListener(new CalculateButtonListener()); // Tambahkan listener aksi
 
-// Create a new panel just for the button
-        JPanel buttonPanel = new JPanel(); // Uses FlowLayout by default, which respects preferred sizes
+        // Buat panel baru khusus untuk tombol agar dapat dipusatkan
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); // Pusatkan tombol
+        buttonPanel.setBackground(new Color(240, 244, 248)); // Samakan dengan latar belakang utama
         buttonPanel.add(calculateButton);
 
-// Add the new panel to the center instead of the button itself
         mainPanel.add(buttonPanel, BorderLayout.CENTER);
 
-        // Output area
-        outputArea = new JTextArea(10, 50); // Suggest a size of 10 rows
-        outputArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
-        outputArea.setEditable(false);
+        // Area Output
+        outputArea = new JTextArea(12, 50); // Ukuran yang sedikit lebih besar
+        outputArea.setFont(new Font("Consolas", Font.PLAIN, 14)); // Font monospaced yang baik untuk tampilan hasil
+        outputArea.setEditable(false); // Area teks tidak dapat diedit
+        outputArea.setBackground(new Color(232, 246, 243)); // Latar belakang hijau kebiruan sangat terang
+        outputArea.setForeground(new Color(44, 62, 80)); // Warna teks output gelap (Wet Asphalt)
+        outputArea.setMargin(new Insets(15, 15, 15, 15)); // Padding internal untuk teks
+        outputArea.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(200, 200, 200), 1, true), // Border tipis
+                BorderFactory.createEmptyBorder(10, 10, 10, 10) // Padding di dalam border
+        ));
+
         JScrollPane scrollPane = new JScrollPane(outputArea);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder()); // Hapus border default scroll pane
         mainPanel.add(scrollPane, BorderLayout.SOUTH);
 
         add(mainPanel);
     }
 
     /**
-     * Creates and returns the main menu bar for the application.
+     * Membuat dan mengembalikan bilah menu utama untuk aplikasi.
+     * Bilah menu dirancang dengan skema warna yang kohesif.
+     * @return JMenuBar yang telah dikonfigurasi.
      */
     private JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
+        menuBar.setBackground(new Color(74, 101, 114)); // Latar belakang abu-abu biru gelap
+        menuBar.setBorder(BorderFactory.createEmptyBorder()); // Hapus border default menu bar
 
-        // Define menu structure
+        // Definisikan struktur menu
         String[] menuTitles = {"Lingkaran", "Persegi", "Persegi Panjang", "Segitiga", "Trapesium", "Jajar Genjang", "Belah Ketupat", "Layang-Layang"};
 
         for(String title : menuTitles) {
             JMenu menu = new JMenu(title);
-            // Get all shapes that belong to this base shape category from the map
+            menu.setForeground(Color.WHITE); // Teks menu putih
+            menu.setFont(new Font("Segoe UI", Font.BOLD, 14)); // Font menu lebih tebal
+
+            // Dapatkan semua bentuk yang termasuk dalam kategori bentuk dasar ini dari peta
             for (String shapeName : shapeFields.keySet()) {
                 if(getBaseShape(shapeName).equals(title)) {
                     JMenuItem menuItem = new JMenuItem(shapeName);
+                    menuItem.setBackground(new Color(74, 101, 114)); // Samakan dengan latar belakang menu
+                    menuItem.setForeground(Color.WHITE); // Teks item menu putih
+                    menuItem.setFont(new Font("Segoe UI", Font.PLAIN, 13)); // Font item menu reguler
+                    menuItem.setOpaque(true); // Diperlukan agar warna latar belakang ditampilkan
+
+                    // Tambahkan efek hover untuk item menu
+                    menuItem.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+                            menuItem.setBackground(new Color(52, 73, 85)); // Warna lebih gelap saat hover
+                            menuItem.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Ganti kursor saat hover
+                        }
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+                            menuItem.setBackground(new Color(74, 101, 114)); // Kembalikan warna asli
+                            menuItem.setCursor(new Cursor(Cursor.DEFAULT_CURSOR)); // Kembalikan kursor default
+                        }
+                    });
+
                     menuItem.addActionListener(new ShapeMenuItemListener(shapeName));
                     menu.add(menuItem);
                 }
@@ -119,24 +319,33 @@ public class KalkulatorGUI extends JFrame {
     }
 
     /**
-     * Updates the input panel with fields required for the selected shape.
-     * @param shapeName The name of the shape to create an input form for.
+     * Memperbarui panel input dengan bidang yang diperlukan untuk bentuk yang dipilih.
+     * @param shapeName Nama bentuk untuk membuat formulir input.
      */
     private void updateInputPanel(String shapeName) {
         currentShape = shapeName;
-        titleLabel.setText("Input untuk " + shapeName);
+        titleLabel.setText("Input untuk " + shapeName); // Perbarui judul
 
-        // Clear previous components
+        // Hapus komponen sebelumnya
         inputPanel.removeAll();
         inputFields.clear();
         inputLabels.clear();
 
-        // Get the required fields for the selected shape
+        // Dapatkan bidang yang diperlukan untuk bentuk yang dipilih
         String[] fields = shapeFields.get(shapeName);
         if (fields != null) {
             for (String fieldName : fields) {
                 JLabel label = new JLabel(fieldName + ":", SwingConstants.RIGHT);
-                JTextField textField = new JTextField(10);
+                label.setFont(new Font("Segoe UI", Font.PLAIN, 15)); // Ukuran font yang konsisten
+                label.setForeground(new Color(52, 73, 85)); // Warna teks yang lebih gelap
+
+                JTextField textField = new JTextField(15); // Bidang teks sedikit lebih lebar
+                textField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+                textField.setBackground(new Color(236, 240, 241)); // Latar belakang abu-abu kebiruan terang
+                textField.setBorder(BorderFactory.createCompoundBorder(
+                        new RoundedBorder(8, new Color(189, 195, 199)), // Border membulat untuk bidang teks
+                        new EmptyBorder(6, 10, 6, 10) // Padding internal
+                ));
 
                 inputLabels.add(label);
                 inputFields.add(textField);
@@ -146,13 +355,13 @@ public class KalkulatorGUI extends JFrame {
             }
         }
 
-        // Refresh the panel
+        // Segarkan panel
         inputPanel.revalidate();
         inputPanel.repaint();
     }
 
     /**
-     * Listener for menu items. Updates the input panel when a shape is selected.
+     * Listener untuk item menu. Memperbarui panel input saat bentuk dipilih.
      */
     private class ShapeMenuItemListener implements ActionListener {
         private String shapeName;
@@ -164,21 +373,22 @@ public class KalkulatorGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             updateInputPanel(shapeName);
+            outputArea.setText(""); // Bersihkan area output saat memilih bentuk baru
         }
     }
 
     /**
-     * Listener for the "Hitung" button. Performs calculations based on the current shape and inputs.
+     * Listener untuk tombol "Hitung". Melakukan perhitungan berdasarkan bentuk dan input saat ini.
      */
     private class CalculateButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (currentShape == null || currentShape.isEmpty()) {
-                outputArea.setText("Error: Silakan pilih bentuk terlebih dahulu.");
+                outputArea.setText("Error: Silakan pilih bentuk terlebih dahulu dari menu di atas.");
                 return;
             }
 
-            // Get values from text fields
+            // Dapatkan nilai dari bidang teks
             double[] values = new double[inputFields.size()];
             try {
                 for (int i = 0; i < inputFields.size(); i++) {
@@ -189,28 +399,28 @@ public class KalkulatorGUI extends JFrame {
                 return;
             }
 
-            // Perform calculation based on the selected shape
+            // Lakukan perhitungan berdasarkan bentuk yang dipilih
             try {
                 calculateAndDisplay(values);
             } catch (ArgumentException ex) {
                 outputArea.setText("Error: " + ex.getMessage());
             } catch (Exception ex) {
                 outputArea.setText("Terjadi error tak terduga: " + ex.getMessage());
-                ex.printStackTrace();
+                ex.printStackTrace(); // Cetak stack trace untuk debugging
             }
         }
     }
 
     /**
-     * Instantiates the correct shape, calculates its properties, and displays the result.
-     * @param v An array of double values from the input fields.
-     * @throws ArgumentException if the input values are invalid for the shape.
+     * Membuat instance bentuk yang benar, menghitung propertinya, dan menampilkan hasilnya.
+     * @param v Sebuah array nilai double dari bidang input.
+     * @throws ArgumentException jika nilai input tidak valid untuk bentuk tersebut.
      */
     private void calculateAndDisplay(double... v) throws ArgumentException {
         StringBuilder result = new StringBuilder();
-        result.append("--- Hasil untuk ").append(currentShape).append(" ---\n");
+        result.append("--- Hasil untuk ").append(currentShape).append(" ---\n\n");
 
-        // 2D Shapes
+        // Bentuk 2D
         if (currentShape.equals("Lingkaran")) {
             Lingkaran obj = new Lingkaran(v[0]);
             result.append(String.format("Jari-Jari: %.2f\n", v[0]));
@@ -222,6 +432,7 @@ public class KalkulatorGUI extends JFrame {
             result.append(String.format("Luas: %.2f\n", obj.hitungLuas()));
             result.append(String.format("Keliling: %.2f\n", obj.hitungKeliling()));
         } else if (currentShape.equals("Persegi Panjang")) {
+            // Bagian ini menangani perhitungan untuk Persegi Panjang (bangun datar)
             PersegiPanjang obj = new PersegiPanjang(v[0], v[1]);
             result.append(String.format("Panjang: %.2f, Lebar: %.2f\n", v[0], v[1]));
             result.append(String.format("Luas: %.2f\n", obj.hitungLuas()));
@@ -263,7 +474,7 @@ public class KalkulatorGUI extends JFrame {
             result.append(String.format("Keliling: %.2f\n", obj.hitungKeliling()));
         }
 
-        // 3D Shapes
+        // Bentuk 3D
         else if (currentShape.equals("Kubus")) {
             Kubus obj = new Kubus(v[0]);
             result.append(String.format("Sisi: %.2f\n", v[0]));
@@ -271,6 +482,7 @@ public class KalkulatorGUI extends JFrame {
             result.append(String.format("Luas Permukaan: %.2f\n", obj.hitungLuasPermukaan()));
             result.append(String.format("Panjang Rusuk: %.2f\n", obj.hitungPanjangRusuk()));
         } else if (currentShape.equals("Balok")) {
+            // Bagian ini menangani perhitungan untuk Balok (bangun ruang)
             Balok obj = new Balok(v[0], v[1], v[2]);
             result.append(String.format("Panjang: %.2f, Lebar: %.2f, Tinggi: %.2f\n", v[0], v[1], v[2]));
             result.append(String.format("Volume: %.2f\n", obj.hitungVolume()));
@@ -336,21 +548,22 @@ public class KalkulatorGUI extends JFrame {
             result.append(String.format("Volume: %.2f\n", obj.hitungVolume()));
             result.append(String.format("Luas Permukaan: %.2f\n", obj.hitungLuasPermukaan()));
         }
-        // ... add other shapes here ...
+        // ... tambahkan bentuk lain di sini sesuai kebutuhan fungsionalitas Anda ...
         else {
             result.append("Kalkulator untuk '").append(currentShape).append("' belum diimplementasikan.");
         }
 
-        result.append("---------------------------------\n");
+        result.append("\n---------------------------------\n");
         outputArea.setText(result.toString());
     }
 
     /**
-     * Initializes the map that defines the input fields required for each shape.
-     * The key is the shape name, and the value is an array of strings representing the input labels.
+     * Menginisialisasi peta yang mendefinisikan bidang input yang diperlukan untuk setiap bentuk.
+     * Kunci adalah nama bentuk, dan nilai adalah array string yang mewakili label input.
+     * Bagian ini tetap sama karena ini adalah fungsionalitas inti.
      */
     private void initializeShapeFields() {
-        // Lingkaran and its derivatives
+        // Lingkaran dan turunannya
         shapeFields.put("Lingkaran", new String[]{"Jari-Jari"});
         shapeFields.put("Juring Lingkaran", new String[]{"Jari-Jari", "Sudut (derajat)"});
         shapeFields.put("Tembereng Lingkaran", new String[]{"Jari-Jari", "Sudut (derajat)"});
@@ -362,46 +575,47 @@ public class KalkulatorGUI extends JFrame {
         shapeFields.put("Juring Bola", new String[]{"Jari-Jari Bola", "Sudut (derajat)"});
         shapeFields.put("Cincin Bola", new String[]{"Jari-Jari Bola", "Tinggi Cincin"});
 
-        // Persegi and its derivatives
+        // Persegi dan turunannya
         shapeFields.put("Persegi", new String[]{"Sisi"});
         shapeFields.put("Kubus", new String[]{"Sisi"});
         shapeFields.put("Limas Persegi", new String[]{"Sisi Alas", "Tinggi Limas"});
 
-        // Persegi Panjang and its derivatives
-        shapeFields.put("Persegi Panjang", new String[]{"Panjang", "Lebar"});
-        shapeFields.put("Balok", new String[]{"Panjang", "Lebar", "Tinggi"});
+        // Persegi Panjang dan turunannya
+        shapeFields.put("Persegi Panjang", new String[]{"Panjang", "Lebar"}); // Ini adalah Persegi Panjang 2D
+        shapeFields.put("Balok", new String[]{"Panjang", "Lebar", "Tinggi"}); // Ini adalah Balok 3D
         shapeFields.put("Limas Persegi Panjang", new String[]{"Panjang", "Lebar", "Tinggi Limas", "Tinggi Sisi Tegak"});
 
-        // Segitiga and its derivatives
+        // Segitiga dan turunannya
         shapeFields.put("Segitiga", new String[]{"Alas", "Tinggi", "Sisi Miring"});
         shapeFields.put("Prisma Segitiga", new String[]{"Alas Segitiga", "Tinggi Segitiga", "Sisi Miring", "Tinggi Prisma"});
         shapeFields.put("Limas Segitiga", new String[]{"Alas Segitiga", "Tinggi Alas", "Tinggi Limas", "Tinggi Sisi Tegak"});
 
-        // Trapesium and its derivatives
+        // Trapesium dan turunannya
         shapeFields.put("Trapesium", new String[]{"Sisi Sejajar a", "Sisi Sejajar b", "Tinggi", "Sisi Miring 1", "Sisi Miring 2"});
         shapeFields.put("Prisma Trapesium", new String[]{"Sisi a", "Sisi b", "Tinggi Alas", "Sisi 1", "Sisi 2", "Tinggi Prisma"});
         shapeFields.put("Limas Trapesium", new String[]{"Sisi a", "Sisi b", "Tinggi Alas", "Sisi 1", "Sisi 2", "Tinggi Limas"});
 
-        // Jajar Genjang and its derivatives
+        // Jajar Genjang dan turunannya
         shapeFields.put("Jajar Genjang", new String[]{"Alas", "Tinggi", "Sisi Miring"});
         shapeFields.put("Prisma Jajar Genjang", new String[]{"Alas", "Tinggi Alas", "Sisi Miring", "Tinggi Prisma"});
         shapeFields.put("Limas Jajar Genjang", new String[]{"Alas", "Tinggi Alas", "Sisi Miring", "Tinggi Limas"});
 
-        // Belah Ketupat and its derivatives
+        // Belah Ketupat dan turunannya
         shapeFields.put("Belah Ketupat", new String[]{"Diagonal 1", "Diagonal 2", "Sisi"});
         shapeFields.put("Prisma Belah Ketupat", new String[]{"Diagonal 1", "Diagonal 2", "Sisi", "Tinggi Prisma"});
         shapeFields.put("Limas Belah Ketupat", new String[]{"Diagonal 1", "Diagonal 2", "Sisi", "Tinggi Limas"});
 
-        // Layang-Layang and its derivatives
+        // Layang-Layang dan turunannya
         shapeFields.put("Layang-Layang", new String[]{"Diagonal 1", "Diagonal 2", "Sisi Pendek", "Sisi Panjang"});
         shapeFields.put("Prisma Layang-Layang", new String[]{"D1", "D2", "Sisi Pendek", "Sisi Panjang", "Tinggi Prisma"});
         shapeFields.put("Limas Layang-Layang", new String[]{"D1", "D2", "Sisi Pendek", "Sisi Panjang", "Tinggi Limas"});
     }
 
     /**
-     * Helper method to determine the base shape category for any given shape name.
-     * @param shapeName The specific name of the shape.
-     * @return The name of the base shape category (e.g., "Lingkaran", "Persegi").
+     * Metode pembantu untuk menentukan kategori bentuk dasar untuk nama bentuk yang diberikan.
+     * @param shapeName Nama spesifik dari bentuk.
+     * @return Nama kategori bentuk dasar (misalnya, "Lingkaran", "Persegi").
+     * Bagian ini tetap sama karena ini adalah fungsionalitas inti.
      */
     private String getBaseShape(String shapeName) {
         if (shapeName.contains("Lingkaran") || shapeName.contains("Tabung") || shapeName.contains("Kerucut") || shapeName.contains("Bola")) return "Lingkaran";
@@ -417,10 +631,19 @@ public class KalkulatorGUI extends JFrame {
 
 
     /**
-     * The main method to run the GUI application.
+     * Metode utama untuk menjalankan aplikasi GUI.
      */
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
+        // Gunakan EventQueue.invokeLater untuk keamanan thread dalam aplikasi Swing
+        EventQueue.invokeLater(() -> {
+            try {
+                // Opsional: Atur Look and Feel modern, meskipun penataan kustom mungkin menimpa beberapa aspek.
+                // Untuk tampilan modern yang lebih seragam, pertimbangkan FlatLaf atau Material Look and Feel
+                // jika ditambahkan sebagai dependensi (misalnya, UIManager.setLookAndFeel("com.formdev.flatlaf.FlatLightLaf");)
+                // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             KalkulatorGUI ex = new KalkulatorGUI();
             ex.setVisible(true);
         });
