@@ -60,8 +60,8 @@ public class CalculationTask implements Runnable {
                 result.append(String.format("Luas: %.2f\n", obj.hitungLuas()));
                 result.append(String.format("Keliling: %.2f\n", obj.hitungKeliling()));
             } else if (shapeName.equals("Trapesium")) {
-                Trapesium obj = new Trapesium(values[0], values[1], values[2], values[3], values[4]);
-                result.append(String.format("Sisi Sejajar a: %.2f, Sisi Sejajar b: %.2f, Tinggi: %.2f, Sisi 1: %.2f, Sisi 2: %.2f\n", values[0], values[1], values[2], values[3], values[4]));
+                Trapesium obj = new Trapesium(values[0], values[1], values[2]);
+                result.append(String.format("Sisi Sejajar a: %.2f, Sisi Sejajar b: %.2f, Tinggi: %.2f\n", values[0], values[1], values[2]));
                 result.append(String.format("Luas: %.2f\n", obj.hitungLuas()));
                 result.append(String.format("Keliling: %.2f\n", obj.hitungKeliling()));
             } else if (shapeName.equals("Juring Lingkaran")) {
@@ -172,13 +172,13 @@ public class CalculationTask implements Runnable {
                 result.append(String.format("Volume: %.2f\n", obj.hitungVolume()));
                 result.append(String.format("Luas Permukaan: %.2f\n", obj.hitungLuasPermukaan()));
             } else if (shapeName.equals("Prisma Trapesium")) {
-                PrismaTrapesium obj = new PrismaTrapesium(values[0], values[1], values[2], values[3], values[4], values[5]);
-                result.append(String.format("Sisi a: %.2f, Sisi b: %.2f, Tinggi Alas: %.2f, Sisi 1: %.2f, Sisi 2: %.2f, Tinggi Prisma: %.2f\n", values[0], values[1], values[2], values[3], values[4], values[5]));
+                PrismaTrapesium obj = new PrismaTrapesium(values[0], values[1], values[2], values[3]);
+                result.append(String.format("Sisi a: %.2f, Sisi b: %.2f, Tinggi Alas: %.2f, Tinggi Prisma: %.2f\n", values[0], values[1], values[2], values[3]));
                 result.append(String.format("Volume: %.2f\n", obj.hitungVolume()));
                 result.append(String.format("Luas Permukaan: %.2f\n", obj.hitungLuasPermukaan()));
             } else if (shapeName.equals("Limas Trapesium")) {
-                LimasTrapesium obj = new LimasTrapesium(values[0], values[1], values[2], values[3], values[4], values[5]);
-                result.append(String.format("Sisi a: %.2f, Sisi b: %.2f, Tinggi Alas: %.2f, Sisi 1: %.2f, Sisi 2: %.2f, Tinggi Limas: %.2f\n", values[0], values[1], values[2], values[3], values[4], values[5]));
+                LimasTrapesium obj = new LimasTrapesium(values[0], values[1], values[2], values[3]);
+                result.append(String.format("Sisi a: %.2f, Sisi b: %.2f, Tinggi Alas: %.2f, Tinggi Limas: %.2f\n", values[0], values[1], values[2], values[3]));
                 result.append(String.format("Volume: %.2f\n", obj.hitungVolume()));
                 result.append(String.format("Luas Permukaan: %.2f\n", obj.hitungLuasPermukaan()));
             }

@@ -464,8 +464,8 @@ public class KalkulatorGUI extends JFrame {
             result.append(String.format("Luas: %.2f\n", obj.hitungLuas()));
             result.append(String.format("Keliling: %.2f\n", obj.hitungKeliling()));
         } else if (currentShape.equals("Trapesium")) {
-            Trapesium obj = new Trapesium(v[0], v[1], v[2], v[3], v[4]);
-            result.append(String.format("Sisi Sejajar a: %.2f, Sisi Sejajar b: %.2f, Tinggi: %.2f, Sisi 1: %.2f, Sisi 2: %.2f\n", v[0], v[1], v[2], v[3], v[4]));
+            Trapesium obj = new Trapesium(v[0], v[1], v[2]);
+            result.append(String.format("Sisi Sejajar a: %.2f, Sisi Sejajar b: %.2f, Tinggi: %.2f\n", v[0], v[1], v[2]));
             result.append(String.format("Luas: %.2f\n", obj.hitungLuas()));
             result.append(String.format("Keliling: %.2f\n", obj.hitungKeliling()));
         } else if (currentShape.equals("Juring Lingkaran")) {
@@ -597,9 +597,9 @@ public class KalkulatorGUI extends JFrame {
         shapeFields.put("Limas Segitiga", new String[]{"Alas Segitiga", "Tinggi Alas", "Tinggi Limas", "Tinggi Sisi Tegak"});
 
         // Trapesium dan turunannya
-        shapeFields.put("Trapesium", new String[]{"Sisi Sejajar a", "Sisi Sejajar b", "Tinggi", "Sisi Miring 1", "Sisi Miring 2"});
-        shapeFields.put("Prisma Trapesium", new String[]{"Sisi a", "Sisi b", "Tinggi Alas", "Sisi 1", "Sisi 2", "Tinggi Prisma"});
-        shapeFields.put("Limas Trapesium", new String[]{"Sisi a", "Sisi b", "Tinggi Alas", "Sisi 1", "Sisi 2", "Tinggi Limas"});
+        shapeFields.put("Trapesium", new String[]{"Sisi Sejajar a", "Sisi Sejajar b", "Tinggi"});
+        shapeFields.put("Prisma Trapesium", new String[]{"Sisi a", "Sisi b", "Tinggi Alas", "Tinggi Prisma"});
+        shapeFields.put("Limas Trapesium", new String[]{"Sisi a", "Sisi b", "Tinggi Alas", "Tinggi Limas"});
 
         // Jajar Genjang dan turunannya
         shapeFields.put("Jajar Genjang", new String[]{"Alas", "Tinggi", "Sisi Miring"});

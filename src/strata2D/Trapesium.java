@@ -3,18 +3,16 @@ package strata2D;
 import Exception.ArgumentException;
 
 public class Trapesium extends Bangun2D {
-    public Double a, b, tinggi, sisi1, sisi2;
+    public Double a, b, tinggi;
     public String nama;
     public Double luas, keliling;
 
-    public Trapesium(Double a, Double b, Double tinggi, Double sisi1, Double sisi2) throws ArgumentException {
-        if (a <= 0 || b <= 0 || tinggi <= 0 || sisi1 <= 0 || sisi2 <= 0)
-            throw new ArgumentException("Semua nilai harus > 0");
+    public Trapesium(Double a, Double b, Double tinggi) throws ArgumentException {
+        if (a <= 0 || b <= 0 || tinggi <= 0 && a > b)
+            throw new ArgumentException("Semua nilai harus > 0 dan sisi atas harus lebih kecil dari sisi bawah");
         this.a = a;
         this.b = b;
         this.tinggi = tinggi;
-        this.sisi1 = sisi1;
-        this.sisi2 = sisi2;
         this.nama = "Trapesium";
         this.luas = hitungLuas();
         this.keliling = hitungKeliling();
@@ -28,7 +26,7 @@ public class Trapesium extends Bangun2D {
 
     @Override
     public Double hitungKeliling() {
-        keliling = this.a + this.b + this.sisi1 + this.sisi2;
+        keliling = this.a + this.b + Math.sqrt(Math.pow((this.b - this.a) / 2, 2) + Math.pow(this.tinggi, 2)) * 2;
         return keliling;
     }
 
@@ -37,8 +35,8 @@ public class Trapesium extends Bangun2D {
         return luas;
     }
 
-    public Double hitungKeliling(Double aBaru, Double bBaru, Double sisi1Baru, Double sisi2Baru) {
-        keliling = aBaru + bBaru + sisi1Baru + sisi2Baru;
+    public Double hitungKeliling(Double aBaru, Double bBaru, Double tinggiBaru) {
+        keliling = aBaru + bBaru + Math.sqrt(Math.pow((bBaru - aBaru) / 2, 2) + Math.pow(tinggiBaru, 2)) * 2;
         return keliling;
     }
 

@@ -8,8 +8,8 @@ public class PrismaTrapesium extends Trapesium {
     protected Double volume, luasPermukaan;
     private String nama;
 
-    public PrismaTrapesium(Double a, Double b, Double tinggi, Double sisi1, Double sisi2, Double tinggiPrisma) throws ArgumentException {
-        super(a, b, tinggi, sisi1, sisi2);
+    public PrismaTrapesium(Double a, Double b, Double tinggi, Double tinggiPrisma) throws ArgumentException {
+        super(a, b, tinggi);
         if (tinggiPrisma <= 0)
             throw new ArgumentException("Tinggi prisma harus > 0");
         this.tinggiPrisma = tinggiPrisma;

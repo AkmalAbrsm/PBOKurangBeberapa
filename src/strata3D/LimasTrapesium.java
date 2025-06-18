@@ -12,10 +12,10 @@ public class LimasTrapesium extends Trapesium {
     public Double luasPermukaan;
 
 
-    public LimasTrapesium(Double a, Double b, Double tinggiAlas, Double sisi1, Double sisi2, Double tinggiLimas) throws ArgumentException {
+    public LimasTrapesium(Double a, Double b, Double tinggiAlas, Double tinggiLimas) throws ArgumentException {
         // Initialize the base shape by calling the parent constructor.
         // This calculates the base's area (luas) and perimeter (keliling).
-        super(a, b, tinggiAlas, sisi1, sisi2);
+        super(a, b, tinggiAlas);
 
         // Validate the pyramid's own dimension
         if (tinggiLimas <= 0) {
