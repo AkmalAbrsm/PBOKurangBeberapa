@@ -625,8 +625,8 @@ public class KalkulatorGUI extends JFrame {
      */
     private String getBaseShape(String shapeName) {
         if (shapeName.contains("Lingkaran") || shapeName.contains("Tabung") || shapeName.contains("Kerucut") || shapeName.contains("Bola")) return "Lingkaran";
-        if (shapeName.contains("Persegi") || shapeName.contains("Kubus")) return "Persegi";
         if (shapeName.contains("Persegi Panjang") || shapeName.contains("Balok")) return "Persegi Panjang";
+        if (shapeName.contains("Persegi") || shapeName.contains("Kubus")) return "Persegi";
         if (shapeName.contains("Segitiga")) return "Segitiga";
         if (shapeName.contains("Trapesium")) return "Trapesium";
         if (shapeName.contains("Jajar Genjang")) return "Jajar Genjang";
