@@ -6,7 +6,6 @@ public class KerucutTerpancung extends Kerucut {
 
     public Double jariJariAtas;
     public Double tinggiKerucutTerpancung;
-    public Double garisPelukisKerucutTerpancung;
 
     public KerucutTerpancung(Double jariJariBawah, Double jariJariAtas, Double tinggi) throws ArgumentException {
         // Call to super() remains the same
@@ -22,7 +21,6 @@ public class KerucutTerpancung extends Kerucut {
         // Initialize the fields for this subclass
         this.jariJariAtas = jariJariAtas;
         this.tinggiKerucutTerpancung = tinggi;
-        this.garisPelukisKerucutTerpancung = Math.sqrt(Math.pow(tinggi, 2) + Math.pow(jariJariBawah - jariJariAtas, 2));
         this.nama = "Kerucut Terpancung";
 
         // --- FIX: CALCULATE THE VOLUME & AREA HERE ---
@@ -46,11 +44,10 @@ public class KerucutTerpancung extends Kerucut {
     public Double hitungLuasPermukaan() {
         Double r = this.jariJariAtas;
         Double R = super.jariJari;
-        Double s = this.garisPelukisKerucutTerpancung;
 
         Double luasAlasAtas = Math.PI * r * r;
         Double luasAlasBawah = super.luas;
-        Double luasSelimut = Math.PI * (R + r) * s;
+        Double luasSelimut = Math.PI * (R + r) * Math.sqrt(Math.pow((R - r), 2) + Math.pow(this.tinggiKerucutTerpancung, 2));
 
         luasPermukaan = luasAlasAtas + luasAlasBawah + luasSelimut;
         return luasPermukaan;

@@ -444,8 +444,8 @@ public class KalkulatorGUI extends JFrame {
             result.append(String.format("Luas: %.2f\n", obj.hitungLuas()));
             result.append(String.format("Keliling: %.2f\n", obj.hitungKeliling()));
         } else if (currentShape.equals("Segitiga")) {
-            Segitiga obj = new Segitiga(v[0], v[1], v[2]);
-            result.append(String.format("Alas: %.2f, Tinggi: %.2f, Sisi Miring: %.2f\n", v[0], v[1], v[2]));
+            Segitiga obj = new Segitiga(v[0], v[1]);
+            result.append(String.format("Alas: %.2f, Tinggi: %.2f\n", v[0], v[1]));
             result.append(String.format("Luas: %.2f\n", obj.hitungLuas()));
             result.append(String.format("Keliling: %.2f\n", obj.hitungKeliling()));
         } else if (currentShape.equals("Belah Ketupat")) {
@@ -505,7 +505,7 @@ public class KalkulatorGUI extends JFrame {
             result.append(String.format("Luas Permukaan: %.2f\n", obj.hitungLuasPermukaan()));
         } else if (currentShape.equals("Kerucut")) {
             Kerucut obj = new Kerucut(v[0], v[1]);
-            result.append(String.format("Jari-Jari: %.2f, Tinggi: %.2f, Garis Pelukis: %.2f\n", v[0], v[1], v[2]));
+            result.append(String.format("Jari-Jari: %.2f, Tinggi: %.2f\n", v[0], v[1]));
             result.append(String.format("Volume: %.2f\n", obj.hitungVolume()));
             result.append(String.format("Luas Permukaan: %.2f\n", obj.hitungLuasPermukaan()));
         } else if (currentShape.equals("Kerucut Terpancung")) {
@@ -514,13 +514,13 @@ public class KalkulatorGUI extends JFrame {
             result.append(String.format("Volume: %.2f\n", obj.hitungVolume()));
             result.append(String.format("Luas Permukaan: %.2f\n", obj.hitungLuasPermukaan()));
         } else if (currentShape.equals("Prisma Segitiga")) {
-            PrismaSegitiga obj = new PrismaSegitiga(v[0], v[1], v[2], v[3]);
-            result.append(String.format("Alas Segitiga: %.2f, Tinggi Segitiga: %.2f, Sisi Miring: %.2f, Tinggi Prisma: %.2f\n", v[0], v[1], v[2], v[3]));
+            PrismaSegitiga obj = new PrismaSegitiga(v[0], v[1], v[2]);
+            result.append(String.format("Alas Segitiga: %.2f, Tinggi Segitiga: %.2f, Tinggi Prisma: %.2f\n", v[0], v[1], v[2]));
             result.append(String.format("Volume: %.2f\n", obj.hitungVolume()));
             result.append(String.format("Luas Permukaan: %.2f\n", obj.hitungLuasPermukaan()));
         } else if (currentShape.equals("Limas Segitiga")) {
-            LimasSegitiga obj = new LimasSegitiga(v[0], v[1], v[2], v[3]);
-            result.append(String.format("Alas Segitiga: %.2f, Tinggi Alas: %.2f, Tinggi Limas: %.2f, Tinggi Sisi Tegak: %.2f\n", v[0], v[1], v[2], v[3]));
+            LimasSegitiga obj = new LimasSegitiga(v[0], v[1], v[2]);
+            result.append(String.format("Tinggi Alas: %.2f, Tinggi Limas: %.2f, Tinggi Sisi Tegak: %.2f\n", v[0], v[1], v[2]));
             result.append(String.format("Volume: %.2f\n", obj.hitungVolume()));
             result.append(String.format("Luas Permukaan: %.2f\n", obj.hitungLuasPermukaan()));
         } else if (currentShape.equals("Prisma Belah Ketupat")) {
@@ -592,7 +592,7 @@ public class KalkulatorGUI extends JFrame {
         shapeFields.put("Limas Persegi Panjang", new String[]{"Panjang", "Lebar", "Tinggi Limas", "Tinggi Sisi Tegak"});
 
         // Segitiga dan turunannya
-        shapeFields.put("Segitiga", new String[]{"Alas", "Tinggi", "Sisi Miring"});
+        shapeFields.put("Segitiga", new String[]{"Alas", "Tinggi"});
         shapeFields.put("Prisma Segitiga", new String[]{"Alas Segitiga", "Tinggi Segitiga", "Sisi Miring", "Tinggi Prisma"});
         shapeFields.put("Limas Segitiga", new String[]{"Alas Segitiga", "Tinggi Alas", "Tinggi Limas", "Tinggi Sisi Tegak"});
 

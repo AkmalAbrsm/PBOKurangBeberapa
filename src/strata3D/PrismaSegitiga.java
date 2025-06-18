@@ -8,8 +8,8 @@ public class PrismaSegitiga extends Segitiga {
     protected Double volume, luasPermukaan;
     private String nama;
 
-    public PrismaSegitiga(Double alas, Double tinggi, Double sisiMiring, Double tinggiPrisma)  throws ArgumentException {
-        super(alas, tinggi, sisiMiring);
+    public PrismaSegitiga(Double alas, Double tinggi, Double tinggiPrisma)  throws ArgumentException {
+        super(alas, tinggi);
         if (tinggiPrisma <= 0) {
             throw new ArgumentException("Tinggi prisma harus lebih besar dari nol");
         }
@@ -31,7 +31,7 @@ public class PrismaSegitiga extends Segitiga {
         if (alasBaru <= 0 || tinggiBaru <= 0 || sisiMiringBaru <= 0 || tinggiPrismaBaru <= 0) {
             throw new IllegalArgumentException("Alas, tinggi, sisi miring, dan tinggi prisma harus lebih besar dari nol");
         }
-        luasPermukaan = (2 * (alasBaru * tinggiBaru / 2)) + (super.hitungKeliling(alasBaru, tinggiBaru, sisiMiringBaru) * tinggiPrismaBaru);
+        luasPermukaan = (2 * (alasBaru * tinggiBaru / 2)) + (super.hitungKeliling(alasBaru, tinggiBaru) * tinggiPrismaBaru);
         return luasPermukaan;
     }
 
