@@ -17,6 +17,9 @@ import strata2D.*;
 import strata3D.*;
 import Exception.ArgumentException;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  * Custom Border untuk sudut membulat.
  * Memberikan tampilan yang lebih lembut pada elemen UI.
@@ -179,8 +182,10 @@ public class KalkulatorGUI extends JFrame {
     private String currentShape;
     private java.util.List<JTextField> inputFields = new ArrayList<>();
     private java.util.List<JLabel> inputLabels = new ArrayList<>();
-    // Sebuah peta untuk menyimpan label untuk setiap bidang input bentuk.
     private final Map<String, String[]> shapeFields = new LinkedHashMap<>();
+
+    // Tambahkan ExecutorService untuk mengelola thread pool
+    private ExecutorService executorService; // Menggunakan ExecutorService untuk mengelola thread
 
     /**
      * Konstruktor KalkulatorGUI.
@@ -189,9 +194,12 @@ public class KalkulatorGUI extends JFrame {
     public KalkulatorGUI() {
         // Inisialisasi peta dengan bidang yang diperlukan untuk setiap bentuk
         initializeShapeFields();
+        // Inisialisasi ExecutorService dengan fixed thread pool (misalnya, 2 thread)
+        executorService = Executors.newFixedThreadPool(2); // Menggunakan thread pooling
         // Siapkan jendela utama
         initUI();
     }
+
 
     /**
      * Menginisialisasi frame utama dan komponen-komponennya.
@@ -399,17 +407,15 @@ public class KalkulatorGUI extends JFrame {
                 return;
             }
 
-            // Lakukan perhitungan berdasarkan bentuk yang dipilih
-            try {
-                calculateAndDisplay(values);
-            } catch (ArgumentException ex) {
-                outputArea.setText("Error: " + ex.getMessage());
-            } catch (Exception ex) {
-                outputArea.setText("Terjadi error tak terduga: " + ex.getMessage());
-                ex.printStackTrace(); // Cetak stack trace untuk debugging
-            }
+            // Buat objek CalculationTask dan kirimkan ke ExecutorService
+            CalculationTask task = new CalculationTask(currentShape, values, outputArea);
+            executorService.execute(task); // Eksekusi tugas di thread terpisah
+
+            // Opsional: tampilkan pesan bahwa perhitungan sedang berlangsung
+            outputArea.setText("Perhitungan untuk " + currentShape + " sedang berlangsung...");
         }
     }
+
 
     /**
      * Membuat instance bentuk yang benar, menghitung propertinya, dan menampilkan hasilnya.
@@ -637,15 +643,18 @@ public class KalkulatorGUI extends JFrame {
         // Gunakan EventQueue.invokeLater untuk keamanan thread dalam aplikasi Swing
         EventQueue.invokeLater(() -> {
             try {
-                // Opsional: Atur Look and Feel modern, meskipun penataan kustom mungkin menimpa beberapa aspek.
-                // Untuk tampilan modern yang lebih seragam, pertimbangkan FlatLaf atau Material Look and Feel
-                // jika ditambahkan sebagai dependensi (misalnya, UIManager.setLookAndFeel("com.formdev.flatlaf.FlatLightLaf");)
-                // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                KalkulatorGUI ex = new KalkulatorGUI();
+                ex.setVisible(true);
+
+                // Tambahkan shutdown hook untuk menutup ExecutorService saat aplikasi keluar
+                Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                    ex.executorService.shutdown(); // Menutup ExecutorService saat aplikasi ditutup
+                    System.out.println("ExecutorService dimatikan.");
+                }));
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            KalkulatorGUI ex = new KalkulatorGUI();
-            ex.setVisible(true);
         });
     }
 }
