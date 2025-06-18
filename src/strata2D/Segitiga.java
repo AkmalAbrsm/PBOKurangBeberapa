@@ -4,16 +4,15 @@ import Exception.ArgumentException;
 
 public class Segitiga extends Bangun2D {
     public String nama;
-    public Double alas, tinggi, sisiMiring;
+    public Double alas, tinggi;
     public Double luas, keliling;
 
-    public Segitiga(Double alas, Double tinggi, Double sisiMiring) throws ArgumentException {
-        if (alas <= 0 || tinggi <= 0 || sisiMiring <= 0) {
+    public Segitiga(Double alas, Double tinggi) throws ArgumentException {
+        if (alas <= 0 || tinggi <= 0) {
             throw new ArgumentException("Nilai tidak boleh kurang dari atau sama dengan 0");
         }
         this.alas = alas;
         this.tinggi = tinggi;
-        this.sisiMiring = sisiMiring;
         this.nama = "Segitiga";
         this.luas = hitungLuas();
         this.keliling = hitungKeliling();
@@ -27,7 +26,7 @@ public class Segitiga extends Bangun2D {
 
     @Override
     public Double hitungKeliling() {
-        keliling = this.alas + this.tinggi + this.sisiMiring;
+        keliling = this.alas + this.tinggi + Math.sqrt(((this.alas / 2) * (this.alas / 2)) + this.tinggi * this.tinggi);
         return keliling;
     }
 
@@ -36,8 +35,8 @@ public class Segitiga extends Bangun2D {
         return luas;
     }
 
-    public Double hitungKeliling(Double alasBaru, Double tinggiBaru, Double sisiMiringBaru) {
-        keliling = alasBaru + tinggiBaru + sisiMiringBaru;
+    public Double hitungKeliling(Double alasBaru, Double tinggiBaru) {
+        keliling = alasBaru + tinggiBaru + Math.sqrt(Math.pow(alasBaru, 2) + Math.pow(tinggiBaru, 2));
         return keliling;
     }
 

@@ -40,8 +40,8 @@ public class CalculationTask implements Runnable {
                 result.append(String.format("Luas: %.2f\n", obj.hitungLuas()));
                 result.append(String.format("Keliling: %.2f\n", obj.hitungKeliling()));
             } else if (shapeName.equals("Segitiga")) {
-                Segitiga obj = new Segitiga(values[0], values[1], values[2]);
-                result.append(String.format("Alas: %.2f, Tinggi: %.2f, Sisi Miring: %.2f\n", values[0], values[1], values[2]));
+                Segitiga obj = new Segitiga(values[0], values[1]);
+                result.append(String.format("Alas: %.2f, Tinggi: %.2f\n", values[0], values[1]));
                 result.append(String.format("Luas: %.2f\n", obj.hitungLuas()));
                 result.append(String.format("Keliling: %.2f\n", obj.hitungKeliling()));
             } else if (shapeName.equals("Belah Ketupat")) {
@@ -107,13 +107,13 @@ public class CalculationTask implements Runnable {
                 result.append(String.format("Volume: %.2f\n", obj.hitungVolume()));
                 result.append(String.format("Luas Permukaan: %.2f\n", obj.hitungLuasPermukaan()));
             } else if (shapeName.equals("Prisma Segitiga")) {
-                PrismaSegitiga obj = new PrismaSegitiga(values[0], values[1], values[2], values[3]);
-                result.append(String.format("Alas Segitiga: %.2f, Tinggi Segitiga: %.2f, Sisi Miring: %.2f, Tinggi Prisma: %.2f\n", values[0], values[1], values[2], values[3]));
+                PrismaSegitiga obj = new PrismaSegitiga(values[0], values[1], values[2]);
+                result.append(String.format("Alas Segitiga: %.2f, Tinggi Segitiga: %.2f, Tinggi Prisma: %.2f\n", values[0], values[1], values[2]));
                 result.append(String.format("Volume: %.2f\n", obj.hitungVolume()));
                 result.append(String.format("Luas Permukaan: %.2f\n", obj.hitungLuasPermukaan()));
             } else if (shapeName.equals("Limas Segitiga")) {
-                LimasSegitiga obj = new LimasSegitiga(values[0], values[1], values[2], values[3]);
-                result.append(String.format("Alas Segitiga: %.2f, Tinggi Alas: %.2f, Tinggi Limas: %.2f, Tinggi Sisi Tegak: %.2f\n", values[0], values[1], values[2], values[3]));
+                LimasSegitiga obj = new LimasSegitiga(values[0], values[1], values[2]);
+                result.append(String.format("Tinggi Alas: %.2f, Tinggi Limas: %.2f, Tinggi Sisi Tegak: %.2f\n", values[0], values[1], values[2]));
                 result.append(String.format("Volume: %.2f\n", obj.hitungVolume()));
                 result.append(String.format("Luas Permukaan: %.2f\n", obj.hitungLuasPermukaan()));
             } else if (shapeName.equals("Prisma Belah Ketupat")) {

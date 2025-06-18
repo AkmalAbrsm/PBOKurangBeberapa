@@ -8,8 +8,8 @@ public class LimasSegitiga extends Segitiga {
     private Double tinggiSisi; // slant height
     private Double volume, luasPermukaan;
 
-    public LimasSegitiga(Double alas, Double tinggiAlas, Double tinggi, Double tinggiSisi) throws ArgumentException {
-        super(alas, tinggiAlas, tinggi);
+    public LimasSegitiga(Double tinggiAlas, Double tinggi, Double tinggiSisi) throws ArgumentException {
+        super(tinggiAlas, tinggi);
         if (tinggi <= 0 || tinggiSisi <= 0) {
             throw new ArgumentException("Tinggi dan tinggi sisi harus lebih besar dari nol");
         }
