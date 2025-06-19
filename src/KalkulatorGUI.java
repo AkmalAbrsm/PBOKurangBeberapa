@@ -589,12 +589,12 @@ public class KalkulatorGUI extends JFrame {
         // Persegi Panjang dan turunannya
         shapeFields.put("Persegi Panjang", new String[]{"Panjang", "Lebar"}); // Ini adalah Persegi Panjang 2D
         shapeFields.put("Balok", new String[]{"Panjang", "Lebar", "Tinggi"}); // Ini adalah Balok 3D
-        shapeFields.put("Limas Persegi Panjang", new String[]{"Panjang", "Lebar", "Tinggi Limas", "Tinggi Sisi Tegak"});
+        shapeFields.put("Limas Persegi Panjang", new String[]{"Panjang", "Lebar", "Tinggi Limas"});
 
         // Segitiga dan turunannya
         shapeFields.put("Segitiga", new String[]{"Alas", "Tinggi"});
-        shapeFields.put("Prisma Segitiga", new String[]{"Alas Segitiga", "Tinggi Segitiga", "Sisi Miring", "Tinggi Prisma"});
-        shapeFields.put("Limas Segitiga", new String[]{"Alas Segitiga", "Tinggi Alas", "Tinggi Limas", "Tinggi Sisi Tegak"});
+        shapeFields.put("Prisma Segitiga", new String[]{"Alas Segitiga", "Tinggi Segitiga", "Tinggi Prisma"});
+        shapeFields.put("Limas Segitiga", new String[]{"Alas Segitiga", "Tinggi Alas", "Tinggi Limas"});
 
         // Trapesium dan turunannya
         shapeFields.put("Trapesium", new String[]{"Sisi Sejajar a", "Sisi Sejajar b", "Tinggi"});

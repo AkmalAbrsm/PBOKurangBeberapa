@@ -147,8 +147,8 @@ public class CalculationTask implements Runnable {
                 result.append(String.format("Volume: %.2f\n", obj.hitungVolume()));
                 result.append(String.format("Luas Permukaan: %.2f\n", obj.hitungLuasPermukaan()));
             } else if (shapeName.equals("Limas Persegi Panjang")) {
-                LimasPersegiPanjang obj = new LimasPersegiPanjang(values[0], values[1], values[2], values[3]);
-                result.append(String.format("Panjang: %.2f, Lebar: %.2f, Tinggi Limas: %.2f, Tinggi Sisi Tegak: %.2f\n", values[0], values[1], values[2], values[3]));
+                LimasPersegiPanjang obj = new LimasPersegiPanjang(values[0], values[1], values[2]);
+                result.append(String.format("Panjang: %.2f, Lebar: %.2f, Tinggi Limas: %.2f\n", values[0], values[1], values[2]));
                 result.append(String.format("Volume: %.2f\n", obj.hitungVolume()));
                 result.append(String.format("Luas Permukaan: %.2f\n", obj.hitungLuasPermukaan()));
             } else if (shapeName.equals("Prisma Jajar Genjang")) {

@@ -14,7 +14,7 @@ public class KerucutTerpancung extends Kerucut {
                 (tinggi * jariJariBawah) / (jariJariBawah - jariJariAtas)
         );
 
-        if (tinggi <= 0 || jariJariAtas <= 0 || jariJariBawah <= jariJariAtas) {
+        if (jariJariAtas <= 0 || jariJariBawah <= jariJariAtas || tinggi <= 0 ) {
             throw new ArgumentException("Dimensi tidak valid. Pastikan tinggi > 0, jari-jari > 0, dan jariJariBawah > jariJariAtas.");
         }
 
