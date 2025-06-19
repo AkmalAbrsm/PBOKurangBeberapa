@@ -26,7 +26,7 @@ public class Tabung extends Lingkaran {
 
     public Double hitungLuasPermukaan() {
         // luas permukaan tabung = 2πr² (alas & tutup) + 2πrt (selimut)
-        luasPermukaan = 2 * Math.PI * jariJari * jariJari + 2 * Math.PI * jariJari * tinggi;
+        luasPermukaan = 2 * super.luas + 2 * Math.PI * jariJari * tinggi;
         return luasPermukaan;
     }
 
