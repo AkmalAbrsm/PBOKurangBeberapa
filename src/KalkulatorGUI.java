@@ -211,6 +211,7 @@ public class KalkulatorGUI extends JFrame {
         setLocationRelativeTo(null); // Pusat jendela di layar
         setDefaultCloseOperation(EXIT_ON_CLOSE); // Keluar dari aplikasi saat menutup jendela
 
+
         // Atur bilah menu
         setJMenuBar(createMenuBar());
 
@@ -323,7 +324,60 @@ public class KalkulatorGUI extends JFrame {
             menuBar.add(menu);
         }
 
+        menuBar.add(createRandomTestMenu());
         return menuBar;
+    }
+
+    private void runRandomCalculations(int count) {
+        String[] shapeNames = shapeFields.keySet().toArray(new String[0]);
+        java.util.List<String> results = java.util.Collections.synchronizedList(new ArrayList<>());
+        outputArea.setText("Running " + count + " random calculations in parallel...\n");
+
+        // Use a CountDownLatch to wait for all tasks
+        java.util.concurrent.CountDownLatch latch = new java.util.concurrent.CountDownLatch(count);
+
+        for (int i = 0; i < count; i++) {
+            String shape = shapeNames[(int)(Math.random() * shapeNames.length)];
+            String[] fields = shapeFields.get(shape);
+            double[] values = new double[fields.length];
+            for (int j = 0; j < fields.length; j++) {
+                values[j] = 1 + Math.random() * 99;
+            }
+            executorService.execute(() -> {
+                CalculationTask task = new CalculationTask(shape, values, null); // null outputArea
+                String result = task.calculateResultString(); // Add this method to CalculationTask
+                results.add(result);
+                latch.countDown();
+            });
+        }
+
+        // After all tasks finish, update the output area
+        executorService.execute(() -> {
+            try {
+                latch.await();
+                StringBuilder all = new StringBuilder();
+                for (String s : results) all.append(s).append("\n");
+                javax.swing.SwingUtilities.invokeLater(() -> outputArea.setText(all.toString()));
+            } catch (InterruptedException ignored) {}
+        });
+    }
+
+    private JMenu createRandomTestMenu() {
+        JMenu randomMenu = new JMenu("Random Multi-Thread Test");
+        JMenuItem runTestItem = new JMenuItem("Run Random Calculations...");
+        runTestItem.addActionListener(e -> {
+            String input = JOptionPane.showInputDialog(this, "How many random calculations?", "5");
+            if (input != null) {
+                try {
+                    int count = Integer.parseInt(input.trim());
+                    if (count > 0) runRandomCalculations(count);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(this, "Please enter a valid number.");
+                }
+            }
+        });
+        randomMenu.add(runTestItem);
+        return randomMenu;
     }
 
     /**
