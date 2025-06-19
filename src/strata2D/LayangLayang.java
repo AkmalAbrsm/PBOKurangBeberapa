@@ -10,8 +10,8 @@ public class LayangLayang extends Bangun2D {
     public Double kelilingLayangLayang;
 
     public LayangLayang(Double d1, Double d2, Double sisiPendek, Double sisiPanjang) throws ArgumentException {
-        if (d1 <= 0 || d2 <= 0 || sisiPendek <= 0 || sisiPanjang <= 0)
-            throw new ArgumentException("Semua nilai harus > 0");
+        if (d1 <= 0 || d2 <= 0 || sisiPendek <= 0 || sisiPanjang <= 0 || sisiPendek >= sisiPanjang)
+            throw new ArgumentException("Semua nilai harus > 0 dan Sisi Pendek harus lebih kecil dari Sisi Panjang");
 
         this.d1 = d1;
         this.d2 = d2;

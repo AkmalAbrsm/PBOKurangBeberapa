@@ -8,7 +8,7 @@ public class Trapesium extends Bangun2D {
     public Double luas, keliling;
 
     public Trapesium(Double a, Double b, Double tinggi) throws ArgumentException {
-        if (a <= 0 || b <= 0 || tinggi <= 0 && a > b)
+        if (a <= 0 || b <= 0 || tinggi <= 0 || a >= b)
             throw new ArgumentException("Semua nilai harus > 0 dan sisi atas harus lebih kecil dari sisi bawah");
         this.a = a;
         this.b = b;
