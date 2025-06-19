@@ -13,8 +13,7 @@ public class Bola extends Lingkaran {
             throw new ArgumentException("Jari-jari tidak boleh kosong dan harus lebih besar dari nol");
         }
         this.nama = "Bola";
-        this.volume = hitungVolume();
-        this.luasPermukaan = hitungLuasPermukaan();
+
     }
 
     public Double hitungVolume() {
